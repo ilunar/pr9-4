@@ -23,7 +23,6 @@
         <property name="hibernateProperties">
             <props>
 		<prop key="hibernate.dialect">org.hibernate.dialect.MySQLDialect</prop>
-		<prop key="hibernate.current_session_context_class">thread</prop>
 		<prop key="hibernate.show_sql">true</prop>
                 <prop key="hibernate.hbm2ddl.auto">update</prop>
             </props>
@@ -39,7 +38,7 @@
     </bean>
     
     <bean id="departmentDAO" class="DAO.DepartmentDAOHibernate">
-	<constructor-arg ref="sessionFactory"/>
+	<property name="sessionFactory" ref="sessionFactory"/>
     </bean>
     
     <bean id="departmentService" class="com.pvt.services.DepartmentServiceImpl">

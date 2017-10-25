@@ -11,20 +11,12 @@ public class App {
         ApplicationContext context = new ClassPathXmlApplicationContext("applicationContext.xml");
         DepartmentService depServ= (DepartmentServiceImpl) context.getBean("departmentService");
         
-        //запись добавится в таблицу
         Department dep=new Department();
         dep.setDepartmentName("IT");
+        //метод вставляет запись в таблицу, потом выбрасывает исключение,
+        //что приводит к откату транзакции, БД остается в исходном состоянии
         depServ.addDepartment(dep);
         
-        /*в таблице ограничение-> не более 5 символов для departmentName
-        запись добавится
-        затем BatchUpdateException: Data truncation: Data too long for column 'departmentName'
-        затем откат транзакции: transaction rollback org.hibernate.exception.DataException:
-        Could not execute JDBC batch update
-        */
-        Department dep2=new Department();
-        dep2.setDepartmentName("notITnotIT");
-        depServ.addDepartment(dep2);
     }
 }
 
